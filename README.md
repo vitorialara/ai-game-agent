@@ -1,11 +1,49 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-f059dc9a6f8d3a56e377f745f24479a46679e63a5d9fe6f495e02850cd0d8118.svg)](https://classroom.github.com/online_ide?assignment_repo_id=7276610&assignment_repo_type=AssignmentRepo)
 # Colosseum Survival!
 
-**Project Description & Template** : https://www.overleaf.com/read/gcpfjdpqpytp 
+**Artifical Intelligence Project**  
+Implemented by: Vitoria Lara Soria
 
-<p align="center">
-  <img src="https://cdn.britannica.com/36/162636-050-932C5D49/Colosseum-Rome-Italy.jpg?w=690&h=388&c=crop">
-</p>
+## 🧠 Project Overview
+
+Colosseum Survival is a two-player grid-based strategy game where agents must move across the board, place barriers, and control territory. The objective is to isolate your opponent and maximize your controlled area once the board is completely divided.
+
+As part of the final project, I implemented a custom intelligent agent using **Monte Carlo Control** to learn and simulate optimal strategies for movement and wall placement.
+
+---
+
+## 🎯 Objectives
+
+- Implement a custom agent that outperforms random baselines.
+- Use reinforcement learning techniques to make intelligent decisions.
+- Optimize territory control using simulations and episodic rollouts.
+- Adapt the strategy based on changing board states and opponent behavior.
+
+---
+
+## 🧠 My Agent: `StudentAgent`
+
+My custom agent (`StudentAgent`) uses a **Monte Carlo reinforcement learning strategy** to simulate many possible outcomes and select the best action.
+
+### 🔍 How it works:
+
+1. **Valid Action Generation**  
+   It checks all possible movements and wall placements using a breadth-first search.
+
+2. **Episode Simulation**  
+   For each possible move, the agent simulates the rest of the game using a copied board state and checks the result with a Union-Find based endgame evaluator.
+
+3. **Monte Carlo Evaluation**  
+   It collects the outcome (score difference) for each simulated move and uses the average as the estimated value for that action.
+
+4. **Move Selection**  
+   The agent selects the move with the highest expected value. Immediate wins are chosen on the spot. Ties are stored as backups. Losses are discarded.
+
+5. **Timeout Fail-safe**  
+   A timer ensures decisions are made within the 2-second game tick constraint.
+
+This strategy does not require a model of the environment and works purely from episodic simulation—a hallmark of Monte Carlo methods.
+
+---
 
 ## Setup
 
@@ -55,26 +93,6 @@ During autoplay, boards are drawn randomly between size `--board_size_min` and `
 
 - Not all agents supports autoplay. The variable `self.autoplay` in [Agent](agents/agent.py) can be set to `True` to allow the agent to be autoplayed. Typically this flag is set to false for a `human_agent`.
 - UI display will be disabled in an autoplay.
-
-## Write your own agent
-
-You need to write your own agent and submit it for the class project. To do so: 
-
-1. Modify the [`student_agent.py`](agents/student_agent.py) file in [`agents/`](agents/) directory, which extends the [`agents.Agent`](agents/agent.py) class. 
-2. Implement the `step` function with your game logic
-3. Register your agent using the decorator [`register_agent`](agents/random_agent.py#L7). The `StudentAgent` class is already decorated with `student_agent` name, feel free to change it or keep it the same.
-4. [This step is already done for `StudentAgent`] Import your agent in the [`__init__.py`](agents/__init__.py) file in [`agents/`](agents/) directory
-5. Run and test your agent using the information above
-
-    ```
-    python simulator.py --player_1 random_agent --player_2 student_agent --display 
-    ```
-
-6. Check autoplay with your agent and `random_agent` is working
-
-    ```
-    python simulator.py --player_1 random_agent --player_2 student_agent --autoplay
-    ```
 
 ## Full API
 
@@ -132,11 +150,8 @@ The final score is $`A:B = 15:10`$. So A wins the game.
 
 ## Issues? Bugs? Questions?
 
-Feel free to open an issue in this repository, or contact us in Ed thread.
+Feel free to open an issue in this repository.
 
-## About
-
-This is a class project for COMP 424, McGill University, Winter 2022.
 
 ## License
 
